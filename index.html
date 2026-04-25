@@ -775,7 +775,6 @@ const state = {
   feedbacks: [],
   selectedStar: 0,
   selectedEmoji: null,
-  sessionSubmitted: false,
 };
 
 const SUPABASE_URL = 'https://yprxacieblfkgbfnsxfv.supabase.co';
@@ -1184,7 +1183,6 @@ document.querySelectorAll('.reaction-btn').forEach(btn=>{
 
 /* ===== SUBMIT ===== */
 document.getElementById('submitBtn').addEventListener('click',async function(e){
-  if(state.sessionSubmitted){showToast('⚠ One transmission per session. Thank you!');return;}
   if(!state.selectedStar){showToast('⚠ Select a star rating first!');return;}
 
   /* ripple */
@@ -1209,8 +1207,6 @@ document.getElementById('submitBtn').addEventListener('click',async function(e){
     state.emojis[emoji]=(state.emojis[emoji]||0)+1;
     if(txt) state.feedbacks.push({r:submittedStar,t:txt,e:emoji,ts:Date.now()});
   }
-  state.sessionSubmitted=true;
-
   /* Reset UI */
   state.selectedStar=0;state.selectedEmoji=null;
   starEls.forEach(x=>x.classList.remove('active'));
